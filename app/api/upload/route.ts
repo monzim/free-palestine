@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
           channels: String(metadata.channels),
           hasAlpha: String(metadata.hasAlpha),
           isisProgressive: String(metadata.isProgressive),
-          ip: req.ip ?? "",
+          ip: ipAddr ?? "",
           blurhash: base64,
         },
 
