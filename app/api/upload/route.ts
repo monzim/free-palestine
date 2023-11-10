@@ -9,6 +9,7 @@ import {
 
 import { NextRequest, NextResponse } from "next/server";
 import { getIPHash, redis } from "@/lib/redis";
+import { getIP } from "@/lib/api";
 
 const GLOBAL_COUNT_KEY = "global_upload_count";
 const UPLOADLIMIT = 10 * 24;
@@ -34,7 +35,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const userHash = await getIPHash(req.ip);
+  const ipAddr = getIP(req) ?? req.ip;
+  const userHash = await getIPHash(ipAddr);
 
   const AZURE_STORAGE_ACCOUNT_KEY = process.env.AZURE_STORAGE_ACCOUNT_KEY || "";
   const AZURE_STORAGE_ACCOUNT_NAME =
