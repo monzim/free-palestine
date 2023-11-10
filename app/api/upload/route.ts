@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { UploadImage } from "@/lib/types";
 import { nanoid } from "nanoid";
 import { getPlaiceholder } from "plaiceholder";
@@ -153,6 +154,7 @@ export async function POST(req: NextRequest) {
     await Promise.all(uploadPromises);
     const quotaLeft = await redis.incrby(userHash, length);
     const globalCount = await redis.incrby(GLOBAL_COUNT_KEY, length);
+    revalidatePath("/", "page");
 
     return NextResponse.json({
       total: files.length,

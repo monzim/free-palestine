@@ -1,6 +1,8 @@
 import { GalleryDisplay } from "@/components/gallery";
 import { getImages } from "@/lib/helper/getImages";
 
+export const revalidate = 300;
+
 export default async function Home() {
   const blobs = await getImages();
 

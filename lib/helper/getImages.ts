@@ -2,8 +2,6 @@ import { BlobServiceClient } from "@azure/storage-blob";
 import { BlobInfo } from "../types";
 import { cache } from "react";
 
-export const revalidate = 300;
-
 export const getImages = cache(async (): Promise<BlobInfo[]> => {
   try {
     const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING || "";
