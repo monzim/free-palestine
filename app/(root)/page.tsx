@@ -1,8 +1,8 @@
 import { GalleryDisplay } from "@/components/gallery";
-import { GetImages } from "@/lib/helper/getImages";
+import { getImages } from "@/lib/helper/getImages";
 
 export default async function Home() {
-  const blobs = await GetImages();
+  const blobs = await getImages();
 
   return (
     <main className="mx-auto max-w-[1960px] p-4">
