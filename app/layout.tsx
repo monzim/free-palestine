@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
-import { Inter } from "next/font/google";
+import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
+
 import { ConstructionBanner } from "@/components/banner";
 
-const inter = Inter({ subsets: ["latin"] });
+const handjet = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Gaza Gallery | Free Palestine",
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={inter.className}>
+      <body className={handjet.className}>
         <div className="mx-6 mt-2 ">
           <ConstructionBanner />
         </div>
