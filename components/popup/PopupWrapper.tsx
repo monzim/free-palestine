@@ -43,9 +43,9 @@ const PopupWrapper: React.FC = () => {
                 Warning !
               </h3>
               <blockquote className="mt-6 border-l-2 pl-6 italic text-base">
-                "This site contains graphic images of dead bodies and injured
-                people. By default, these images are blurred. And anyone who is
-                under 18 years old should not see these images."
+                &quot;This site contains graphic images of dead bodies and
+                injured people. By default, these images are blurred. And anyone
+                who is under 18 years old should not see these images.&quot;
               </blockquote>
               <p className="text-sm text-muted-foreground  mt-4 my-2 px-4 text-center">
                 Anyone can upload images to this site. We are not responsible
