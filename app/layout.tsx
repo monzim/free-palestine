@@ -4,13 +4,13 @@ import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
 
 import { ConstructionBanner } from "@/components/banner";
+import { config } from "@/lib/config";
 
 const handjet = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Gaza Gallery | Free Palestine",
-  description:
-    "See what is happening in Gaza. The world needs to know. More than 10,000 Palestinians have been killed by the terrorist Israeli occupation Army (IDF) in the besieged Gaza Strip since October 7, 2023.",
+  description: `See what is happening in Gaza. The world needs to know. More than ${config.deadCount.toLocaleString()} Palestinians have been killed by the terrorist Israeli occupation Army (IDF) in the besieged Gaza Strip since October 7, 2023.`,
 };
 
 export default function RootLayout({

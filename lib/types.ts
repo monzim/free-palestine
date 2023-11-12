@@ -1,25 +1,25 @@
 /* eslint-disable no-unused-vars */
 export interface BlobInfo {
-  id: number;
-  height: string;
-  width: string;
-  public_id: string;
-  format: string;
-  publicUrl: string;
-
+  id: string;
+  height: number;
+  width: number;
   description?: string;
+
+  format?: string;
+  publicUrl: string;
+  createdAt?: Date;
+
   sensitive: boolean;
   author?: string;
   groupId?: string;
-
-  size?: string;
-  space?: string;
-  density?: string;
+  density?: number;
   chromaSubsampling?: string;
-  channels?: string;
-  hasAlpha?: string;
-  isisProgressive?: string;
+  size?: number;
   blurhash?: string;
+  isisProgressive?: boolean;
+  space?: string;
+  channels?: number;
+  hasAlpha?: boolean;
 }
 
 export interface UploadImage {

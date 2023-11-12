@@ -1,10 +1,10 @@
-var deadCount = 10022;
-var childrenCount = 4104;
+var deadCount = 11078;
+var childrenCount = 4500;
 
 export const config = {
   deadCount: deadCount,
   childrenCount: childrenCount,
-  bannerMessage: `More than ${deadCount} Palestinians, including ${childrenCount.toLocaleString()} children have
+  bannerMessage: `More than ${deadCount.toLocaleString()} Palestinians, including ${childrenCount.toLocaleString()} children have
                 been killed by the Israeli army in the besieged Gaza Strip since
                 October 7`,
   bannerLink:

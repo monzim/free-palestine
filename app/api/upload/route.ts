@@ -1,6 +1,4 @@
-import { revalidatePath } from "next/cache";
 import { UploadImage } from "@/lib/types";
-import { nanoid } from "nanoid";
 import { getPlaiceholder } from "plaiceholder";
 
 import {
@@ -11,6 +9,12 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 import { getIPHash, redis } from "@/lib/redis";
 import { getIP } from "@/lib/api";
+import { AzureNamedKeyCredential, TableClient } from "@azure/data-tables";
+import {
+  CURRENTUTCPERTITIONKEY,
+  generateGroupId,
+  generateRowKeyWithGroup,
+} from "@/lib/radom";
 
 const GLOBAL_COUNT_KEY = "global_upload_count";
 const UPLOADLIMIT = 10 * 24;
@@ -42,13 +46,20 @@ export async function POST(req: NextRequest) {
   const AZURE_STORAGE_ACCOUNT_KEY = process.env.AZURE_STORAGE_ACCOUNT_KEY || "";
   const AZURE_STORAGE_ACCOUNT_NAME =
     process.env.AZURE_STORAGE_ACCOUNT_NAME || "";
+
+  const AZURE_STORAGE_TABLE_NAME = process.env.AZURE_STORAGE_TABLE_NAME || "";
   const CONTAINER = process.env.AZURE_STORAGE_CONTAINER_NAME || "gallery-1";
 
   if (AZURE_STORAGE_ACCOUNT_KEY === "" || AZURE_STORAGE_ACCOUNT_NAME === "") {
-    return NextResponse.json(
-      { error: "AZURE_STORAGE_ACCOUNT_KEY not set" },
-      { status: 500 }
-    );
+    throw new Error("AZURE_STORAGE_ACCOUNT_KEY not set");
+  }
+
+  if (AZURE_STORAGE_TABLE_NAME === "") {
+    throw new Error("AZURE_STORAGE_TABLE_NAME not set");
+  }
+
+  if (AZURE_STORAGE_ACCOUNT_KEY === "" || AZURE_STORAGE_ACCOUNT_NAME === "") {
+    return NextResponse.json({ error: "server config error" }, { status: 500 });
   }
 
   const sharedKeyCredential = new StorageSharedKeyCredential(
@@ -58,6 +69,17 @@ export async function POST(req: NextRequest) {
   const blobServiceClient = new BlobServiceClient(
     `https://${AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
     sharedKeyCredential
+  );
+
+  const credential = new AzureNamedKeyCredential(
+    AZURE_STORAGE_ACCOUNT_NAME,
+    AZURE_STORAGE_ACCOUNT_KEY
+  );
+
+  const tableClient = new TableClient(
+    `https://${AZURE_STORAGE_ACCOUNT_NAME}.table.core.windows.net`,
+    AZURE_STORAGE_TABLE_NAME,
+    credential
   );
 
   const containerClient = blobServiceClient.getContainerClient(CONTAINER);
@@ -76,7 +98,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Get the current user count
+    // start check quota
     const currentUserQuota = await redis.get(userHash);
     if (currentUserQuota === null) {
       await redis.set(userHash, 0, "EX", TTL);
@@ -104,9 +126,13 @@ export async function POST(req: NextRequest) {
         { status: 202 }
       );
     }
+    // end check quota
 
-    const groupId = length > 1 ? nanoid() : "";
+    const groupId = length > 1 ? generateGroupId() : null;
+
     const uploadPromises = files.map(async (file, index) => {
+      const fileName = generateRowKeyWithGroup(groupId);
+
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
       const prop: UploadImage = JSON.parse(props[index]);
@@ -115,9 +141,7 @@ export async function POST(req: NextRequest) {
         return;
       }
 
-      const ext = file.name.split(".").pop();
       const { base64, metadata } = await getPlaiceholder(buffer);
-      const fileName = `${nanoid()}.${metadata.format ?? ext}`;
 
       const blockBlobClient = containerClient.getBlockBlobClient(fileName);
 
@@ -128,7 +152,7 @@ export async function POST(req: NextRequest) {
               ? description ?? ""
               : prop.description ?? "",
           sensitive: prop?.sensitive ? "true" : "false",
-          groupId: groupId,
+          groupId: groupId ?? "",
 
           width: String(metadata.width),
           height: String(metadata.height),
@@ -139,6 +163,7 @@ export async function POST(req: NextRequest) {
           channels: String(metadata.channels),
           hasAlpha: String(metadata.hasAlpha),
           isisProgressive: String(metadata.isProgressive),
+          timestamp: String(Date.now()),
           ip: ipAddr ?? "",
           blurhash: base64,
         },
@@ -149,22 +174,40 @@ export async function POST(req: NextRequest) {
       };
 
       await blockBlobClient.upload(buffer, buffer.length, options);
+
+      await tableClient.createEntity({
+        partitionKey: CURRENTUTCPERTITIONKEY,
+        rowKey: fileName,
+        ip: options.metadata.ip,
+        url: blockBlobClient.url,
+        sensitive: prop?.sensitive ? true : false,
+        groupId: options.metadata.groupId,
+        blurhash: options.metadata.blurhash,
+        description: options.metadata.description,
+        width: Number(options.metadata.width),
+        height: Number(options.metadata.height),
+        size: Number(options.metadata.size),
+        density: Number(options.metadata.density),
+        channels: Number(options.metadata.channels),
+        hasAlpha: Boolean(options.metadata.hasAlpha),
+        space: options.metadata.space,
+        isisProgressive: Boolean(options.metadata.isisProgressive),
+        chromaSubsampling: options.metadata.chromaSubsampling,
+      });
     });
 
     await Promise.all(uploadPromises);
     const quotaLeft = await redis.incrby(userHash, length);
     const globalCount = await redis.incrby(GLOBAL_COUNT_KEY, length);
-    revalidatePath("/", "page");
 
     return NextResponse.json({
-      total: files.length,
       message: "success",
+      total: files.length,
       quotaLeft: Math.max(0, UPLOADLIMIT - quotaLeft),
       globalUploadCount: globalCount,
     });
   } catch (error) {
-    console.log("🚀 ~ file: route.ts:158 ~ POST ~ error:", error);
-
+    console.log("🚀 ~ file: route.ts:205 ~ POST ~ error:", error);
     return NextResponse.json({ error: "failed to upload" }, { status: 500 });
   }
 }

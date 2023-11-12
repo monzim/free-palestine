@@ -22,13 +22,12 @@ import { BadgeX, EyeIcon, EyeOff, Loader2, UploadCloud } from "lucide-react";
 
 function sanitizeForHTTPHeader(value: string): string {
   const sanitizedValue = value.replace(/[^a-zA-Z0-9\-._~ ]/g, " ");
-
   return sanitizedValue;
 }
 
 export function UploadSection() {
   const selectLimit = 24;
-  const uploadLimit = 10;
+  const uploadLimit = 20;
   const textLimit = 300;
 
   const [blobs, setBlobs] = useState<UploadImage[]>([]);

@@ -24,10 +24,10 @@ function GalleryImage({ blob }: { blob: BlobInfo }) {
             alt="Image"
             className={cn(
               "duration-700 ease-in-out transform rounded-lg transition will-change-auto group-hover:brightness-110",
-              // show ? "blur-md backdrop-blur-md backdrop-brightness-200" : ""
+
               show
                 ? "blur-md backdrop-blur-md backdrop-brightness-200"
-                : "blur-0 backdrop-blur-0 backdrop-brightness-100",
+                : "blur-0 backdrop-blur-0 backdrop-brightness-100"
             )}
             style={{ transform: "translate3d(0, 0, 0)" }}
             src={blob.publicUrl}
@@ -47,19 +47,21 @@ function GalleryImage({ blob }: { blob: BlobInfo }) {
           </div>
         )}
       </div>
-      <CustomModal modal={modal} setModal={setModal} href={blob.publicUrl}>
+
+      <CustomModal modal={modal} setModal={setModal} blob={blob}>
         <Image
           src={blob.publicUrl}
           alt="Image"
           placeholder="blur"
           blurDataURL={blob.blurhash}
-          width={200}
-          height={200}
-          className={`w-full h-auto hover:cursor-default ${
+          width={blob.width}
+          height={blob.height}
+          className={cn(
+            `w-auto h-full hover:cursor-default object-contain rounded-md shadow-md overflow-hidden`,
             show
               ? "blur-md backdrop-blur-md backdrop-brightness-200"
               : "blur-0 backdrop-blur-0 backdrop-brightness-100"
-          }`}
+          )}
         />
         {show && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
