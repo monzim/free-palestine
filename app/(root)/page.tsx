@@ -1,7 +1,7 @@
 import { GalleryDisplay } from "@/components/gallery";
 import { queryLatestImages } from "@/lib/helper/getImages";
 
-export const revalidate = 300;
+export const revalidate = 180; //1 minutes
 
 export default async function Home() {
   const blobs = await queryLatestImages();

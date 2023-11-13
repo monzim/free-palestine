@@ -240,22 +240,28 @@ export function UploadSection() {
           </blockquote>
 
           <div className="mt-10 flex justify-center">
-            <Button
-              type="submit"
-              disabled={!blobs.length || uploading}
-              className="px-4 py-4 w-full max-w-lg rounded-lg"
-            >
-              {uploading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <UploadCloud className="mr-2" />
-              )}
-              {uploading
-                ? "Uploading..."
-                : `Upload ${blobs.length === 0 ? "" : blobs.length} Image${
-                    blobs.length > 1 ? "s" : ""
-                  }`}
-            </Button>
+            <div>
+              <p className="text-sm text-muted-foreground my-2">
+                It will take a few minutes to see your images on the website.
+              </p>
+
+              <Button
+                type="submit"
+                disabled={!blobs.length || uploading}
+                className="px-4 py-4 w-full max-w-lg rounded-lg"
+              >
+                {uploading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <UploadCloud className="mr-2" />
+                )}
+                {uploading
+                  ? "Uploading..."
+                  : `Upload ${blobs.length === 0 ? "" : blobs.length} Image${
+                      blobs.length > 1 ? "s" : ""
+                    }`}
+              </Button>
+            </div>
           </div>
         </section>
       </form>

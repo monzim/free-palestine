@@ -12,8 +12,11 @@ export const metadata: Metadata = {
   title: "Gaza Gallery | Free Palestine",
   description: `See what is happening in Gaza. The world needs to know. More than ${config.deadCount.toLocaleString()} Palestinians have been killed by the terrorist Israeli occupation Army (IDF) in the besieged Gaza Strip since October 7, 2023.`,
   category: "Gallery",
+
   openGraph: {
-    images: ["public/images/230922-gaza-city.jpg"],
+    images: [
+      "https://freepalestine.blob.core.windows.net/qassam/99eaf2d0-8245-11ee-bca2-cd50651227bf",
+    ],
   },
 };
 

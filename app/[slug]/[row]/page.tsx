@@ -19,7 +19,11 @@ export async function generateMetadata(
   return {
     title: blob?.description || "Gaza Gallery | Image",
     openGraph: {
-      images: [blob?.publicUrl ?? "", ...previousImages],
+      images: [
+        blob?.publicUrl ??
+          "https://freepalestine.blob.core.windows.net/qassam/99eaf2d0-8245-11ee-bca2-cd50651227bf",
+        ...previousImages,
+      ],
     },
   };
 }
