@@ -2,9 +2,13 @@
 
 import React from "react";
 import cross from "@/assets/icons/cross.png";
-import download from "@/assets/icons/download.png";
+import linkIcon from "@/assets/icons/link.png";
+
 import Image from "next/image";
 import { BlobInfo } from "@/lib/types";
+import Link from "next/link";
+import { Share2Icon } from "lucide-react";
+import { toast } from "../ui/use-toast";
 
 interface CustomModalProps {
   modal: boolean;
@@ -21,13 +25,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
 }) => {
   if (!modal) return null;
 
-  const handleDownload = async () => {
-    const link = document.createElement("a");
-    link.download = "downloaded-image";
-    link.href = blob.publicUrl;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleCopyLink = async () => {
+    const fullUrl =
+      window.location.origin + "/" + blob.partitionKey + "/" + blob.rowKey;
+    await navigator.clipboard.writeText(fullUrl);
+    toast({
+      description: "Link copied to clipboard",
+    });
   };
 
   return (
@@ -44,11 +48,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
                 <Image src={cross} alt="cross" width={22} height={22} />
               </button>
 
+              <Link
+                href={blob.partitionKey + "/" + blob.rowKey}
+                className="transition-all z-40 absolute text-lg p-2 rounded-full top-3 right-20 text-foreground bg-accent opacity-90 hover:opacity-100"
+              >
+                <Image src={linkIcon} alt="cross" width={22} height={22} />
+              </Link>
+
               <button
                 className="transition-all z-40 absolute text-lg p-2 rounded-full top-3 right-4 text-foreground bg-accent opacity-90 hover:opacity-100"
-                onClick={handleDownload}
+                onClick={handleCopyLink}
               >
-                <Image src={download} alt="cross" width={22} height={22} />
+                <Share2Icon size={22} />
               </button>
             </div>
           </div>

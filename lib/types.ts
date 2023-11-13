@@ -20,6 +20,9 @@ export interface BlobInfo {
   space?: string;
   channels?: number;
   hasAlpha?: boolean;
+
+  partitionKey?: string;
+  rowKey?: string;
 }
 
 export interface UploadImage {

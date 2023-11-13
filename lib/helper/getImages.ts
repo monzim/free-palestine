@@ -87,7 +87,7 @@ export async function queryLatestImages(limit: number = 100) {
     for await (const page of iterator) {
       page.forEach((entity) => {
         const newImageProps: BlobInfo = {
-          id: entity.RowKey as string,
+          id: entity.rowKey as string,
           height: entity.height as number,
           width: entity.width as number,
           publicUrl: entity.url as string,
@@ -104,6 +104,9 @@ export async function queryLatestImages(limit: number = 100) {
           hasAlpha: entity.hasAlpha as boolean,
           isisProgressive: entity.isProgressive as boolean,
           blurhash: entity.blurhash as string,
+
+          rowKey: entity.rowKey as string,
+          partitionKey: entity.partitionKey as string,
         };
 
         blobs.push(newImageProps);
@@ -120,5 +123,53 @@ export async function queryLatestImages(limit: number = 100) {
       error
     );
     return [];
+  }
+}
+
+export async function queryLatestImagesByGroupId(
+  groupId: string,
+  limit: number = 100
+) {}
+
+export async function getImageWithPartitionKeyAndRowKey(
+  partitionKey?: string,
+  rowKey?: string
+) {
+  if (!partitionKey || !rowKey) {
+    return null;
+  }
+
+  try {
+    let entity = await tableClient.getEntity(partitionKey, rowKey);
+    const newImageProps: BlobInfo = {
+      id: entity.rowKey as string,
+      height: entity.height as number,
+      width: entity.width as number,
+      publicUrl: entity.url as string,
+
+      sensitive: entity.sensitive as boolean,
+      description: entity.description as string,
+      groupId: entity.groupId as string,
+
+      size: entity.size as number,
+      space: entity.space as string,
+      density: entity.density as number,
+      chromaSubsampling: entity.chromaSubsampling as string,
+      channels: entity.channels as number,
+      hasAlpha: entity.hasAlpha as boolean,
+      isisProgressive: entity.isProgressive as boolean,
+      blurhash: entity.blurhash as string,
+
+      rowKey: entity.rowKey as string,
+      partitionKey: entity.partitionKey as string,
+    };
+
+    return newImageProps;
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: getImage.ts:55 ~ queryLatestImages ~ error:",
+      error
+    );
+    return null;
   }
 }
