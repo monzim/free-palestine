@@ -1,7 +1,9 @@
+"use client";
+
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 import { BlobInfo } from "@/lib/types";
 import GalleryImage from "./gallery-image";
-import { Button } from "./ui/button";
-import { Briefcase, Loader } from "lucide-react";
 import Link from "next/link";
 import { config } from "@/lib/config";
 
@@ -18,6 +20,7 @@ export function GalleryDisplay({ blobs }: Props) {
             <img
               src="https://media.istockphoto.com/id/1318499469/photo/close-up-view-of-the-flag-of-palestine-waving-in-the-wind.jpg?s=612x612&w=0&k=20&c=sUae-vjKWX7_muD5_7u3Nr6PAUcoOP5wiT0EHkfcmLo="
               className="w-full h-full object-cover brightness-100"
+              alt="pic"
             />
           </span>
           <span className="absolute left-0 right-0 bottom-0 h-[400px] bg-gradient-to-b from-black/0 via-black to-black"></span>
