@@ -1,5 +1,5 @@
-var deadCount = 11078;
-var childrenCount = 4500;
+var deadCount = 11100;
+var childrenCount = 4609;
 
 export const config = {
   deadCount: deadCount,

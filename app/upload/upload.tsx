@@ -7,14 +7,7 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
@@ -27,7 +20,7 @@ function sanitizeForHTTPHeader(value: string): string {
 
 export function UploadSection() {
   const selectLimit = 24;
-  const uploadLimit = 20;
+  const uploadLimit = 24;
   const textLimit = 300;
 
   const [blobs, setBlobs] = useState<UploadImage[]>([]);
@@ -216,7 +209,7 @@ export function UploadSection() {
 
         <section className="w-full max-w-3xl mx-auto px-4 py-4">
           <Textarea
-            placeholder="Description (optional)"
+            placeholder="Description (optional) Just text, no special characters."
             value={description}
             maxLength={textLimit}
             onChange={(e) =>
@@ -279,6 +272,7 @@ export function UploadSection() {
                   />
                 </DialogTrigger>
               </div>
+
               <Button
                 size={"icon"}
                 variant={"secondary"}
@@ -301,17 +295,8 @@ export function UploadSection() {
                 )}
               </Button>
 
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>
-                    Add Individual Description (optional)
-                  </DialogTitle>
-                  <DialogDescription>{blob.file?.name}</DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-
-              <DialogContent>
-                <ScrollArea className="h-[90vh] w-[450px]">
+              <DialogContent className="max-w-md">
+                <ScrollArea className="h-[90vh] w-auto">
                   <ul>
                     {blobs.map((blob, index) => (
                       <li
@@ -333,7 +318,7 @@ export function UploadSection() {
                               variant={
                                 blob.sensitive ? "destructive" : "outline"
                               }
-                              className="absolute bottom-1 right-1 w-7 h-7"
+                              className="absolute bottom-1 left-1 w-7 h-7"
                               onClick={() => toggleSensitive(index)}
                             >
                               {!blob.sensitive ? (

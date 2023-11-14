@@ -1,3 +1,5 @@
+import { config } from "@/lib/config";
+
 export default function Component() {
   return (
     <section className="w-full py-12 md:py-24 lg:py-32">
@@ -29,7 +31,8 @@ export default function Component() {
               </h3>
             </div>
             <p className="text-sm md:text-base lg:text-lg mt-3 text-zinc-600 dark:text-zinc-400">
-              Resources for the deceased individuals and their families.
+              More that {config.deadCount.toLocaleString()} people have been
+              killed by the IDF since October 7, 2023.
             </p>
           </div>
           <div className="rounded-lg shadow-md bg-white dark:bg-zinc-900 p-6">
@@ -85,13 +88,15 @@ export default function Component() {
               </h3>
             </div>
             <p className="text-sm md:text-base lg:text-lg mt-3 text-zinc-600 dark:text-zinc-400">
-              Resources for children and their families.
+              More than {config.childrenCount.toLocaleString()} children have
+              been killed by the IDF since October 7, 2023.
             </p>
           </div>
         </div>
         <div className="mt-10 text-center">
-          <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
-            Source of Resources
+          <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-orange-600">
+            {/* Source of Resources */}
+            This section is under construction
           </h3>
           <p className="text-sm md:text-base lg:text-lg mt-3 text-zinc-600 dark:text-zinc-400">
             All resources are provided by the local government and non-profit
