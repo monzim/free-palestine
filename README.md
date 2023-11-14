@@ -1,6 +1,10 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Free Palestine
 
-## Getting Started
+## Introduction
+
+This is a open source project that aims to show the current situations in Gaza. Anyone from any where in the world can upload image here. And it will be publicly available for everyone to see. BUT WE WILL ONLY ALLOW GAZA AND PALESTINE RELATED IMAGES. This repo is open for contribution. You can contribute to this project by adding new features, fixing bugs, improving documentation, and more.
+
+## How to Run locally
 
 First, run the development server:
 
@@ -20,17 +24,67 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## How to Contribute
 
-To learn more about Next.js, take a look at the following resources:
+We welcome contributions from the community! Whether you're fixing a bug, implementing a new feature, or improving documentation, your efforts help make this project better for everyone.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Fork the Repository
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Click the "Fork" button at the top-right corner of this repository to create your own fork.
 
-## Deploy on Vercel
+### 2. Clone Your Fork
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Clone the repository to your local machine using the following command:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+git clone https://github.com/monzim/free-palestine.git
+```
+
+### 3. Create a New Branch
+
+```bash
+git checkout -b my-new-branch
+```
+
+### 4. Make Changes
+
+Make any changes you want to the project. Add any new features. Fix any bugs. Make sure the project builds successfully.
+
+### 5. Commit Changes
+
+    ```bash
+    git commit -m "my changes"
+    ```
+
+### 6. Push Changes
+
+    ```bash
+    git push origin my-new-branch
+    ```
+
+### 7. Create Pull Request
+
+Go to your fork on GitHub, and click the "Compare & pull request" button. From here, you can open a pull request, in which you explain the changes you want to make and why you want to make them. When you're ready, click the "Create pull request" button.
+
+### 8. Describe Your Pull Request
+
+Provide a clear and detailed description of your changes in the pull request. Include information about what the changes aim to achieve.
+
+### 9. Request Review
+
+Assign the pull request to a relevant person or the project maintainers for review. If you're unsure, feel free to leave it for general community review.
+
+## Contributors
+
+- [Azraf Al Monzim](https://github.com/monzim) - creator and maintainer
+- [Md. Asaduzzman Arabin](https://github.com/azn-arabin) - contributor
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+# Thank You!
+
+Thank you for contributing to Free-Palestine! Your efforts are highly appreciated.
+
+Feel free to reach out if you have any questions or need further assistance.
