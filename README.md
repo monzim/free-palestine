@@ -1,5 +1,7 @@
 # Free Palestine
 
+Welcome to the Free-Palestine Awareness Gallery, a platform for sharing images that reflect the current situation in Gaza and Palestine. In the face of limitations on certain social media platforms, this gallery provides a space where individuals can contribute and amplify the voices of those directly affected.
+
 ## Introduction
 
 This is a open source project that aims to show the current situations in Gaza. Anyone from any where in the world can upload image here. And it will be publicly available for everyone to see. BUT WE WILL ONLY ALLOW GAZA AND PALESTINE RELATED IMAGES. This repo is open for contribution. You can contribute to this project by adding new features, fixing bugs, improving documentation, and more.
