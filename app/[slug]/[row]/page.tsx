@@ -11,7 +11,7 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export const getData = cache(
+const getData = cache(
   async ({
     params,
   }: {
