@@ -2,17 +2,39 @@ import { getImageWithPartitionKeyAndRowKey } from "@/lib/helper/getImages";
 import { ShowImageSlug } from "./show-image";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
+import { cache } from "react";
+
+export const revalidate = 1440; // 24 hours
 
 type Props = {
   params: { slug: string; row: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
+export const getData = cache(
+  async ({
+    params,
+  }: {
+    params: {
+      slug: string;
+      row: string;
+    };
+  }) => {
+    return await getImageWithPartitionKeyAndRowKey(params.slug, params.row);
+  }
+);
+
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const blob = await getImageWithPartitionKeyAndRowKey(params.slug, params.row);
+  // const blob = await getImageWithPartitionKeyAndRowKey(params.slug, params.row);
+  const blob = await getData({
+    params: {
+      row: params.row,
+      slug: params.slug,
+    },
+  });
 
   const previousImages = (await parent).openGraph?.images || [];
 
@@ -36,7 +58,7 @@ export default async function Page({
     row: string;
   };
 }) {
-  const blob = await getImageWithPartitionKeyAndRowKey(params.slug, params.row);
+  const blob = await getData({ params });
 
   if (!blob) return notFound();
 
