@@ -11,13 +11,17 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { InfoIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "../ui/button";
 
-const PopupWrapper: React.FC = () => {
+const UploadWarningPopupWrapper: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const hasVisitedBefore = localStorage.getItem(
-      "gaza-monzim-com-visited-before"
+      "gaza-monzim-com-visited-upload"
     );
 
     if (hasVisitedBefore === null) {
@@ -30,8 +34,12 @@ const PopupWrapper: React.FC = () => {
     see();
   };
 
+  function goBack() {
+    router.replace("/");
+  }
+
   const see = () => {
-    localStorage.setItem("gaza-monzim-com-visited-before", "true");
+    localStorage.setItem("gaza-monzim-com-visited-upload", "true");
   };
 
   return (
@@ -40,25 +48,36 @@ const PopupWrapper: React.FC = () => {
         <AlertDialogContent className="text-center">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
-              <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-orange-600">
+              <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight text-primary">
                 <InfoIcon className="inline-block w-6 h-6 mr-2" />
-                Warning !
+                Warning ! Upload
               </h3>
               <blockquote className="mt-6 border-l-2 pl-6 italic text-base">
-                &quot;This site contains graphic images of dead bodies and
-                injured people. By default, these images are blurred. And anyone
-                who is under 18 years old should not see these images.&quot;
+                &quot;By default, these images will be public. And you can not
+                delete them after uploading. Only Palestine related images are
+                allowed. You are responsible for any image you upload.&quot;
               </blockquote>
               <p className="text-sm text-muted-foreground  mt-4 my-2 px-4 text-center">
-                Anyone can upload images to this site. We are not responsible
-                for any image.
+                This site is not responsible for any image. Anyone can upload
+                images to this site.
               </p>
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogDescription></AlertDialogDescription>
           <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={goBack}
+              className={cn(
+                buttonVariants({
+                  variant: "secondary",
+                }),
+                "mt-2 sm:mt-0"
+              )}
+            >
+              Go Back
+            </AlertDialogAction>
             <AlertDialogAction onClick={handleClose} className="w-full">
-              I accept
+              I Understand
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -67,4 +86,4 @@ const PopupWrapper: React.FC = () => {
   );
 };
 
-export default PopupWrapper;
+export default UploadWarningPopupWrapper;
