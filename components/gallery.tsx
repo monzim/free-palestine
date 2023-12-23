@@ -1,12 +1,14 @@
 "use client";
 
-
 import { BlobInfo } from "@/lib/types";
 import GalleryImage from "./gallery-image";
 import Link from "next/link";
 import { config } from "@/lib/config";
 import Image from "next/image";
 import palestineFlag from "public/images/1-palestine-flag.jpg";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "./ui/button";
+import { ImagePlusIcon } from "lucide-react";
 
 interface Props {
   blobs: BlobInfo[];
@@ -37,12 +39,13 @@ export function GalleryDisplay({ blobs }: Props) {
             <span className="font-bold">
               {config.deadCount.toLocaleString()}
             </span>{" "}
-            Palestinians, including{" "}
+            {/* Palestinians, including{" "}
             <span className="font-bold">
               {config.childrenCount.toLocaleString()}{" "}
-            </span>
+            </span> */}
             have been killed by the Israeli occupation Army (IDF) in the
-            besieged Gaza Strip since October 7, 2023.
+            besieged Gaza Strip since October 7, 2023. Last updated on 23
+            December 2023.
           </p>
         </div>
 
@@ -62,6 +65,20 @@ export function GalleryDisplay({ blobs }: Props) {
           <GalleryImage blob={blob} />
         </div>
       ))}
+
+      <aside className="fixed bottom-4 end-4 z-50 flex">
+        <div>
+          {/* <Button size="md" color="success" startContent={<Radio />}></Button> */}
+
+          <Link
+            className={cn(buttonVariants(), "rounded-full py-6 text-base")}
+            href={"/upload"}
+          >
+            <ImagePlusIcon size={20} className="mr-2" />
+            Upload
+          </Link>
+        </div>
+      </aside>
     </div>
   );
 }

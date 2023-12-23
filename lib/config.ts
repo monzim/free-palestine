@@ -2,7 +2,7 @@ var deadCount = 20057;
 var childrenCount = 5350;
 var woundedCount = 50000;
 
-var bannerMessage = `More than ${deadCount.toLocaleString()} Palestinians killed by the Israeli army in the besieged Gaza Strip since October 7`;
+var bannerMessage = `More than ${deadCount.toLocaleString()} Palestinians killed by the Israeli army in the besieged Gaza Strip since October 7 (Last updated: 23 Dec, 23)`;
 
 export const config = {
   cndUrl: "https://gaza.azureedge.net/",
