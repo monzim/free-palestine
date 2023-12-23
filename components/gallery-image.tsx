@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { BlobInfo } from "@/lib/types";
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
+import { cn, fileKeyToUrl } from "@/lib/utils";
 import CustomModal from "@/components/popup/Modal";
 
 function GalleryImage({ blob }: { blob: BlobInfo }) {
@@ -30,7 +30,7 @@ function GalleryImage({ blob }: { blob: BlobInfo }) {
                 : "blur-0 backdrop-blur-0 backdrop-brightness-100"
             )}
             style={{ transform: "translate3d(0, 0, 0)" }}
-            src={blob.publicUrl}
+            src={fileKeyToUrl(blob.rowKey)}
             width={blob.width}
             height={blob.height}
             placeholder="blur"
@@ -50,7 +50,7 @@ function GalleryImage({ blob }: { blob: BlobInfo }) {
 
       <CustomModal modal={modal} setModal={setModal} blob={blob}>
         <Image
-          src={blob.publicUrl}
+          src={fileKeyToUrl(blob.rowKey)}
           alt="Image"
           placeholder="blur"
           blurDataURL={blob.blurhash}

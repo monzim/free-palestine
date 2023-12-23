@@ -4,7 +4,7 @@ import Image from "next/image";
 import { BlobInfo } from "@/lib/types";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, fileKeyToUrl } from "@/lib/utils";
 
 export function ShowImageSlug({ blob }: { blob: BlobInfo }) {
   const [show, setShowBlur] = useState(blob.sensitive ?? true);
@@ -27,7 +27,7 @@ export function ShowImageSlug({ blob }: { blob: BlobInfo }) {
                 : "blur-0 backdrop-blur-0 backdrop-brightness-100"
             )}
             style={{ transform: "translate3d(0, 0, 0)" }}
-            src={blob.publicUrl}
+            src={fileKeyToUrl(blob.rowKey)}
             width={blob.width}
             height={blob.height}
             placeholder="blur"

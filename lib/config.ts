@@ -1,12 +1,18 @@
-var deadCount = 12700;
+var deadCount = 20057;
 var childrenCount = 5350;
+var woundedCount = 50000;
+
+var bannerMessage = `More than ${deadCount.toLocaleString()} Palestinians killed by the Israeli army in the besieged Gaza Strip since October 7`;
 
 export const config = {
+  cndUrl: "https://gaza.azureedge.net/",
   deadCount: deadCount,
   childrenCount: childrenCount,
-  bannerMessage: `More than ${deadCount.toLocaleString()} Palestinians, including ${childrenCount.toLocaleString()} children have
+  bannerMessage:
+    bannerMessage ??
+    `More than ${deadCount.toLocaleString()} Palestinians, including ${childrenCount.toLocaleString()} children have
                 been killed by the Israeli army in the besieged Gaza Strip since
                 October 7`,
   bannerLink:
-    "https://www.aljazeera.com/news/2023/11/22/israel-agrees-to-ceasefire-deal-paving-way-for-some-captives-release#:~:text=The%20accord%20is%20the%20first,been%20forced%20from%20their%20homes.",
+    "https://apnews.com/article/israel-hamas-war-news-12-22-2023-7453c6f92d74eb1e12e506489031b91b",
 };
