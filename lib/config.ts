@@ -1,8 +1,8 @@
-var deadCount = 20057;
-var childrenCount = 5350;
+var deadCount = 30035;
+var childrenCount = 13000;
 var woundedCount = 50000;
 
-var bannerMessage = `More than ${deadCount.toLocaleString()} Palestinians killed by the Israeli army in the besieged Gaza Strip since October 7 (Last updated: 23 Dec, 23)`;
+var bannerMessage = `More than ${deadCount.toLocaleString()} Palestinians killed by the Israeli army in the besieged Gaza Strip since October 7 (Last updated: 29 Feb, 24)`;
 
 export const config = {
   cndUrl: "https://gaza.azureedge.net/",
@@ -14,5 +14,5 @@ export const config = {
                 been killed by the Israeli army in the besieged Gaza Strip since
                 October 7`,
   bannerLink:
-    "https://apnews.com/article/israel-hamas-war-news-12-22-2023-7453c6f92d74eb1e12e506489031b91b",
+    "https://www.aljazeera.com/news/2024/2/29/gaza-death-toll-surpasses-30000-with-no-let-up-in-israeli-bombardment",
 };
