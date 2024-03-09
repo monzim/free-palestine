@@ -44,8 +44,8 @@ export function GalleryDisplay({ blobs }: Props) {
               {config.childrenCount.toLocaleString()}{" "}
             </span> */}
             have been killed by the Israeli occupation Army (IDF) in the
-            besieged Gaza Strip since October 7, 2023. Last updated on 23
-            December 2023.
+            besieged Gaza Strip since October 7, 2023. Last updated on 29
+            February 2024.
           </p>
         </div>
 
