@@ -3,6 +3,7 @@ import { ShowImageSlug } from "./show-image";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import { fileKeyToUrl } from "@/lib/utils";
 
 export const revalidate = 1440; // 24 hours
 
@@ -42,7 +43,7 @@ export async function generateMetadata(
     title: blob?.description || "Gaza Gallery | Image",
     openGraph: {
       images: [
-        blob?.publicUrl ??
+        fileKeyToUrl(blob?.rowKey) ??
           "https://freepalestine.blob.core.windows.net/qassam/99eaf2d0-8245-11ee-bca2-cd50651227bf",
         ...previousImages,
       ],

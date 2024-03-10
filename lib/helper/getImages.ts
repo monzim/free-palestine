@@ -6,6 +6,7 @@ import {
   odata,
 } from "@azure/data-tables";
 import { CURRENTUTCPERTITIONKEY, formatUtcDateToPartitionKey } from "../radom";
+import { blobToImage } from "./get-images";
 
 const AZURE_STORAGE_ACCOUNT_KEY = process.env.AZURE_STORAGE_ACCOUNT_KEY || "";
 const AZURE_STORAGE_ACCOUNT_NAME = process.env.AZURE_STORAGE_ACCOUNT_NAME || "";
@@ -27,7 +28,7 @@ export async function queryLatestImages(limit: number = 100) {
     let blobs: BlobInfo[] = [];
 
     let sevenDaysAgo = new Date(
-      currentDate.getTime() - 7 * 24 * 60 * 60 * 1000 // 7 days ago
+      currentDate.getTime() - 100 * 24 * 60 * 60 * 1000 // 7 days ago
     );
 
     let listResults = tableClient.listEntities({
@@ -44,33 +45,9 @@ export async function queryLatestImages(limit: number = 100) {
 
     for await (const page of iterator) {
       page.forEach((entity) => {
-        const newImageProps: BlobInfo = {
-          id: entity.rowKey as string,
-          height: entity.height as number,
-          width: entity.width as number,
-          publicUrl: entity.url as string,
-
-          sensitive: entity.sensitive as boolean,
-          description: entity.description as string,
-          groupId: entity.groupId as string,
-
-          size: entity.size as number,
-          space: entity.space as string,
-          density: entity.density as number,
-          chromaSubsampling: entity.chromaSubsampling as string,
-          channels: entity.channels as number,
-          hasAlpha: entity.hasAlpha as boolean,
-          isisProgressive: entity.isProgressive as boolean,
-          blurhash: entity.blurhash as string,
-
-          rowKey: entity.rowKey as string,
-          partitionKey: entity.partitionKey as string,
-        };
-
-        blobs.push(newImageProps);
+        blobs.push(blobToImage(entity));
       });
-      // We break to only get the first page
-      // this only sends a single request to the service
+
       break;
     }
 
@@ -87,33 +64,9 @@ export async function queryLatestImages(limit: number = 100) {
 
       for await (const page of iterator) {
         page.forEach((entity) => {
-          const newImageProps: BlobInfo = {
-            id: entity.rowKey as string,
-            height: entity.height as number,
-            width: entity.width as number,
-            publicUrl: entity.url as string,
-
-            sensitive: entity.sensitive as boolean,
-            description: entity.description as string,
-            groupId: entity.groupId as string,
-
-            size: entity.size as number,
-            space: entity.space as string,
-            density: entity.density as number,
-            chromaSubsampling: entity.chromaSubsampling as string,
-            channels: entity.channels as number,
-            hasAlpha: entity.hasAlpha as boolean,
-            isisProgressive: entity.isProgressive as boolean,
-            blurhash: entity.blurhash as string,
-
-            rowKey: entity.rowKey as string,
-            partitionKey: entity.partitionKey as string,
-          };
-
-          blobs.push(newImageProps);
+          blobs.push(blobToImage(entity));
         });
-        // We break to only get the first page
-        // this only sends a single request to the service
+
         break;
       }
     }

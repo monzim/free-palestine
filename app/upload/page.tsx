@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { UploadSection } from "./upload";
 import { config } from "@/lib/config";
+import UploadWarningPopupWrapper from "@/components/popup/first-upload";
 
 export const metadata: Metadata = {
   title: "Upload to Gaza Gallery",
@@ -17,6 +18,7 @@ export default function Page() {
   return (
     <>
       <UploadSection />
+      <UploadWarningPopupWrapper />
     </>
   );
 }
